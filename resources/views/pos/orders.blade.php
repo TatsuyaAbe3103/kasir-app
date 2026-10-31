@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Riwayat Pesanan & Laporan - Nusa POS')
+@section('title', 'Riwayat Pesanan & Laporan - ' . ($appBrandName ?? 'Hadi Cafee'))
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6" x-data="{

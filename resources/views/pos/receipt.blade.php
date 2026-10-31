@@ -142,7 +142,7 @@
     <div class="receipt-container">
         <!-- Header Toko dari Pengaturan Admin -->
         <div class="header-store text-center">
-            <h2>☕ {{ $storeName ?? 'CAFE NUSA POS' }}</h2>
+            <h2>☕ {{ $storeName ?? 'HADI CAFEE' }}</h2>
             <p>{{ $storeAddress ?? 'Jl. Melati Utama No. 88, Jakarta' }}</p>
             <p>Telp: {{ $storePhone ?? '0812-3456-7890' }}</p>
         </div>
@@ -265,7 +265,7 @@
         <div class="footer">
             <p class="font-bold">TERIMA KASIH</p>
             <p>Silakan Berkunjung Kembali!</p>
-            <p style="margin-top: 5px; font-size: 8px; color: #888;">Powered by Nusa POS</p>
+            <p style="margin-top: 5px; font-size: 8px; color: #888;">Powered by {{ $storeName ?? 'Hadi Cafee' }}</p>
         </div>
     </div>
 
