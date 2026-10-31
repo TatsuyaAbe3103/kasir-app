@@ -1,58 +1,132 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ☕ NUSA POS - Sistem Kasir & Manajemen Cafe / Resto Modern
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="https://img.shields.io/badge/Laravel-11.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel 11" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-3.x-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
+  <img src="https://img.shields.io/badge/Alpine.js-3.x-8BC0D0?style=for-the-badge&logo=alpine.js&logoColor=white" alt="Alpine.js" />
+  <img src="https://img.shields.io/badge/Database-SQLite%20%7C%20MySQL-003B57?style=for-the-badge&logo=sqlite&logoColor=white" alt="Database" />
+  <img src="https://img.shields.io/badge/License-Commercial%20Ready-F59E0B?style=for-the-badge" alt="License" />
 </p>
 
-## About Laravel
+Aplikasi **Point of Sale (POS) & Manajemen Cafe / Resto** berbasis web yang cepat, responsif, dan kaya fitur. Dirancang untuk mempercepat transaksi di jam ramai (*rush hour*), mencegah kebocoran kas, menghemat tenaga waiter dengan pemesanan mandiri QR Meja (e-Menu), serta mendukung cetak struk kasir dan tiket dapur ke printer thermal (58mm & 80mm).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## ✨ Fitur Unggulan
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1. 🖥️ Layar Kasir POS Berkecepatan Tinggi
+- Antarmuka responsif ramah layar sentuh (*touchscreen*) maupun shortcut keyboard.
+- Pencarian menu instan dengan filter kategori (Coffee, Non-Coffee, Food, Dessert).
+- Tombol nominal uang cepat (*Pas, 10rb, 20rb, 50rb, 100rb, 200rb*) untuk mempercepat perhitungan kembalian tunai.
+- Multi-metode pembayaran: **Tunai**, **QRIS Dinamis**, dan **Transfer Bank**.
+- Otomatis menghitung Pajak Resto (PB1 10%) dan Service Charge opsional.
 
-## Learning Laravel
+### 2. 💵 Sistem Shift Kasir & Audit Laci (Cash Drawer)
+- Mengadopsi format struk ritel standar (*CODK, CODC, dan CODT*).
+- **Buka Kasir (Open Shift):** Pencatatan uang modal awal kembalian di laci kasir beserta struk modal awal.
+- **Closing Shift:** Rekap otomatis total omzet per kasir, target uang fisik laci, dan deteksi selisih kas (*Pas, Surplus, atau Minus*).
+- Riwayat riil audit kas drawer per tanggal dan per kasir.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 3. 🧾 Pisah Bayar (Split Bill)
+- Fitur bagi tagihan 50:50 instan untuk tamu rombongan yang ingin membayar patungan.
+- Menghasilkan 2 nomor invoice dan 2 struk cetak terpisah (**BILL 1** dan **BILL 2**) tanpa duplikasi pengurangan inventaris stok.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 4. 📱 e-Menu & Pesanan Mandiri Tamu (QR Code Meja)
+- Setiap meja memiliki barcode QR unik.
+- Tamu cukup scan menggunakan kamera smartphone tanpa perlu unduh aplikasi.
+- Tamu dapat memilih menu, menambah catatan kustom, checkout, dan langsung membayar via QRIS.
+- Pesanan meja otomatis masuk ke layar kasir dan dapur secara *real-time*.
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### 5. 🍳 Tiket Dapur & Bar (Kitchen Display Ticket)
+- Struk pesanan khusus tim koki dapur dan barista yang terpisah dari struk tamu.
+- Tanpa mencantumkan nominal harga, fokus pada nama menu, kuantitas besar, nomor meja, dan catatan kustom (*misal: "Less sugar", "Pedas level 3"*).
 
-## Agentic Development
+### 6. 🖨️ Kontrol Thermal Printer Lengkap
+- Pilihan ukuran kertas thermal: **58mm** (mini portable/Bluetooth) dan **80mm** (desktop kasir USB/LAN).
+- Tombol **Test Print** untuk verifikasi koneksi printer langsung dari bar kasir.
+- Opsi **Auto-Print** (otomatis memicu dialog cetak sesaat setelah transaksi sukses).
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+### 7. 📦 Audit Stok Dapur & Bahan Baku
+- Pengurangan stok otomatis saat menu terjual.
+- Fitur penyesuaian stok (*Stock Opname*) dan input penerimaan barang dari supplier.
+- Peringatan stok menipis (*Low-Stock Alert*).
+- Tombol instan **Toggle Sold Out** bila menu habis di tengah operasional.
 
+### 8. 🎟️ Kupon & Voucher Promo
+- Pembuatan kode voucher diskon persentase (%) atau potongan nominal rupiah (Rp).
+- Pengaturan minimal belanja, kuota maksimal penggunaan, dan batas periode promo.
+
+### 9. 👥 Kelola Pengguna & Sistem Persetujuan (Approval)
+- 3 Peran Tugas: **Manager Resto (Admin)**, **Kasir POS**, dan **Auditor Stok**.
+- Pendaftaran akun staf baru dilengkapi alur verifikasi/persetujuan (*approval*) admin sebelum akun dapat digunakan untuk transaksi.
+
+### 10. 📊 Laporan Finansial & Omzet
+- Ringkasan omzet harian, mingguan, dan bulanan.
+- Laporan rincian metode pembayaran (Tunai vs Digital QRIS).
+- Rekapitulasi perolehan pajak resto PB1 dan laporan siap cetak untuk pembukuan.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Backend:** Laravel 11.x (PHP 8.2+)
+- **Frontend:** Blade Templating, Tailwind CSS, Alpine.js
+- **Database:** SQLite (default ringan tanpa setup) / MySQL & MariaDB
+- **Icons:** FontAwesome 6 Pro / Free
+- **Tunneling:** Cloudflare Tunnel (Opsional untuk akses online publik dengan HTTPS aman)
+
+---
+
+## 🚀 Panduan Instalasi Lokal
+
+### 1. Clone Repository
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone https://github.com/USERNAME/kasir-app.git
+cd kasir-app
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### 2. Install Dependency PHP & JavaScript
+```bash
+composer install
+npm install && npm run build
+```
 
-## Contributing
+### 3. Konfigurasi Environment (`.env`)
+Salin file template konfigurasi:
+```bash
+cp .env.example .env
+```
+Generate kunci aplikasi enkripsi:
+```bash
+php artisan key:generate
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 4. Setup Database & Data Awal (Migration & Seeder)
+```bash
+# Buat database SQLite kosong (jika menggunakan SQLite)
+type nul > database\database.sqlite
 
-## Code of Conduct
+# Jalankan migrasi dan seeder data awal
+php artisan migrate --seed
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 5. Jalankan Server Lokal
+```bash
+php artisan serve
+```
+Akses aplikasi melalui browser di: **`http://localhost:8000`**
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 🔐 Akun Login Default (Hasil Seeder)
 
-## License
+| Peran (Role) | Email Login | Password |
+| :--- | :--- | :--- |
+| **Manager Resto (Admin)** | `admin@resto.com` | `admin123` |
+| **Kasir POS (Cashier)** | `kasir@resto.com` | `password` |
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## 📄 Lisensi
+Proyek ini dibuat dan dikembangkan untuk keperluan operasional retail & resto siap pakai (*commercial-ready*).
+Silakan disesuaikan dengan kebutuhan bisnis Anda.
