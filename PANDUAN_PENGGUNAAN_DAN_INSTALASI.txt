@@ -1,0 +1,316 @@
+================================================================================
+                    PANDUAN LENGKAP PENGGUNAAN, INSTALASI,
+                      DAN PENGATURAN JARINGAN NUSA POS
+                          (CAFE & RESTO SYSTEM)
+================================================================================
+
+Dokumen ini dibuat agar pemilik resto, kasir, admin, dan tim teknisi dapat 
+dengan mudah menginstal, menjalankan, mengatur jaringan, dan mengoperasikan 
+seluruh fitur Nusa POS tanpa kebingungan.
+
+--------------------------------------------------------------------------------
+DAFTAR ISI:
+1. AKUN LOGIN BAWAAN SISTEM
+2. CARA CEPAT MENJALANKAN APLIKASI (SEHARI-HARI)
+3. CARA INSTALASI DARI NOL (JIKA PINDAH LAPTOP / KOMPUTER BARU)
+4. CARA PENGATURAN JARINGAN (AGAR BISA DIAKSES DARI HP KASIR & QR MEJA TAMU)
+5. CARA MENGUBAH NAMA RESTO, TAGLINE, DAN LOGO
+6. CARA MENGATUR REKENING BANK, VA, DAN QRIS
+7. CARA MENGATUR MEJA & CETAK QR CODE MEJA
+8. CARA MENGATUR MENU & AUDIT STOK GUDANG
+9. CARA PEMBATALAN / HAPUS PESANAN (VOID) OLEH KASIR
+10. CARA KELOLA PENGGUNA & GANTI PASSWORD
+--------------------------------------------------------------------------------
+
+
+================================================================================
+1. AKUN LOGIN BAWAAN SISTEM
+================================================================================
+Aplikasi ini sudah dilengkapi dengan 3 peran (Role) berbeda:
+
+A. Role ADMIN (Manager Resto - Akses Penuh ke Semua Fitur)
+   - Email    : admin@nusa.com
+   - Password : password
+   - Hak Akses: Layar Kasir, Riwayat, Meja, Kelola Menu, Kupon Promo, 
+                Pengaturan Toko & Bank, Laporan Keuangan, Kelola User & Password,
+                Histori Order Dihapus, dan Audit Stok.
+
+B. Role KASIR (Operasional Harian Kasir)
+   - Email    : kasir@nusa.com
+   - Password : password
+   - Hak Akses: Layar Kasir (Input Pesanan), Riwayat Transaksi (Cetak Struk, 
+                Bayar Tagihan, Hapus/Batalkan Order Salah), dan Status Meja.
+   - Catatan  : Kasir TIDAK BISA melihat laporan keuangan, stok opname, 
+                maupun histori pesanan yang dihapus.
+
+C. Role AUDITOR (Khusus Staf Gudang & Audit Inventaris)
+   - Email    : audit@nusa.com
+   - Password : password
+   - Hak Akses: Dashboard Stok Menu, Catat Stok Masuk (+), Catat Stok Rusak/Basi (-),
+                Stock Opname Fisik, Laporan Barang Masuk & Keluar, serta 
+                Histori Pesanan yang Dihapus oleh Kasir (Void Audit).
+
+
+================================================================================
+2. CARA CEPAT MENJALANKAN APLIKASI (SEHARI-HARI)
+================================================================================
+Setiap hari saat toko/cafe mulai buka, cukup jalankan server dengan cara berikut:
+
+CARA 1 (Paling Mudah - 1 Kali Klik):
+1. Buka folder aplikasi (misal: C:\xampp\htdocs\kasir-app).
+2. Double-click file: "serve.bat"
+3. Jendela hitam (Command Prompt) akan terbuka dan menampilkan:
+   - Akses dari Komputer Kasir : http://127.0.0.1:8000
+   - Akses dari HP / Laptop lain : http://[IP-Komputer]:8000
+4. Buka browser (Google Chrome / Edge) dan ketik alamat di atas.
+5. PENTING: Jangan tutup jendela hitam tersebut selama kasir beroperasi!
+
+CARA 2 (Lewat Terminal / PowerShell):
+1. Buka Command Prompt atau PowerShell.
+2. Masuk ke folder aplikasi:
+   cd C:\xampp\htdocs\kasir-app
+3. Jalankan perintah:
+   php artisan serve --host=0.0.0.0 --port=8000
+
+
+================================================================================
+3. CARA INSTALASI DARI NOL (JIKA PINDAH LAPTOP / SERVER BARU)
+================================================================================
+Jika Anda ingin memasang aplikasi ini di komputer/laptop kasir yang baru:
+
+Prasyarat Software:
+1. Install PHP versi 8.2 atau 8.3 (misal lewat XAMPP atau instal PHP mandiri).
+   - Pastikan extension php berikut aktif di php.ini:
+     extension=pdo_sqlite
+     extension=sqlite3
+     extension=curl
+     extension=fileinfo
+     extension=gd
+     extension=mbstring
+     extension=openssl
+2. Install Composer (bisa diunduh gratis dari https://getcomposer.org).
+
+Langkah-Langkah Instalasi:
+1. Salin seluruh folder aplikasi (kasir-app) ke komputer baru, misalnya ke:
+   C:\xampp\htdocs\kasir-app
+
+2. Buka Command Prompt (CMD) di dalam folder tersebut:
+   cd C:\xampp\htdocs\kasir-app
+
+3. Buat file .env dari file contoh (jika file .env belum ada):
+   copy .env.example .env
+
+4. Install library pendukung:
+   composer install
+
+5. Buat Application Encryption Key:
+   php artisan key:generate
+
+6. Hubungkan folder penyimpanan gambar logo & menu:
+   php artisan storage:link
+
+7. Buat database SQLite dan isi data awal otomatis (Meja, Menu, Akun Admin/Kasir):
+   php artisan migrate --seed
+
+8. Selesai! Aplikasi siap dijalankan dengan:
+   php artisan serve --host=0.0.0.0 --port=8000
+
+
+================================================================================
+4. CARA PENGATURAN JARINGAN (AKSES HP KASIR & QR MEJA TAMU)
+================================================================================
+Aplikasi ini memiliki fitur Self-Ordering di mana tamu cafe bisa memesan sendiri 
+dari HP mereka hanya dengan scan QR Code di atas meja tanpa install aplikasi.
+
+Agar HP tamu dan tablet kasir bisa membuka sistem:
+
+A. PASTIKAN SEMUA PERANGKAT TERHUBUNG KE SATU WIFI YANG SAMA
+   - Komputer Kasir (Server), HP Tamu, dan Tablet Kasir harus terhubung 
+     ke jaringan WiFi cafe yang sama.
+
+B. CARA MENGETAHUI IP KOMPUTER KASIR:
+   1. Di komputer kasir, tekan tombol [Windows + R] pada keyboard.
+   2. Ketik "cmd" lalu tekan Enter.
+   3. Ketik perintah:
+      ipconfig
+   4. Cari baris "IPv4 Address", contohnya:
+      IPv4 Address. . . . . . . . . . . : 192.168.1.15
+   5. Maka alamat aplikasi Anda di jaringan WiFi adalah:
+      http://192.168.1.15:8000
+
+C. CARA MENGUBAH ALAMAT QR CODE MEJA (FILE .env):
+   Jika Anda mencetak kartu QR Meja, QR code tersebut berisi link pemesanan.
+   Buka file ".env" di folder kasir-app menggunakan Notepad:
+   
+   1. Mode WiFi Lokal Resto (Offline/Lokal):
+      Jika dipakai di WiFi cafe lokal, kosongkan saja baris POS_DEPLOY_URL:
+      POS_DEPLOY_URL=
+      (Sistem akan otomatis memakai IP WiFi komputer kasir Anda).
+
+   2. Mode Online / VPS / Cloud Hosting / Domain Sendiri:
+      Jika aplikasi sudah Anda deploy ke internet/cloud agar bisa diakses 
+      dari mana saja lewat internet, isi domain Anda pada baris berikut:
+      POS_DEPLOY_URL=https://pos.kedaisenja.com
+      atau:
+      POS_DEPLOY_URL=http://192.168.1.15:8000
+
+   3. Setelah mengubah file .env, simpan file (Ctrl + S), lalu jalankan perintah:
+      php artisan config:clear
+      Maka seluruh QR Code meja yang dicetak akan otomatis menggunakan domain baru.
+
+D. JIKA HP TIDAK BISA MEMBUKA APLIKASI (SOLUSI FIREWALL WINDOWS):
+   Jika di laptop kasir bisa dibuka (http://127.0.0.1:8000) tetapi di HP tamu 
+   loading terus / gagal tersambung:
+   1. Buka "Windows Defender Firewall" di menu Start Windows.
+   2. Klik "Allow an app or feature through Windows Defender Firewall".
+   3. Cari "php.exe" atau klik "Change settings" -> "Allow another app".
+   4. Browse ke lokasi PHP (misal: C:\php83\php.exe atau C:\xampp\php\php.exe).
+   5. Centang kotak "Private" dan "Public", lalu klik OK.
+
+
+================================================================================
+5. CARA MENGUBAH NAMA RESTO, TAGLINE, DAN LOGO
+================================================================================
+Seluruh identitas toko bisa diubah kapan saja secara langsung dari browser:
+
+1. Login sebagai Admin (admin@nusa.com / password).
+2. Di navbar atas, klik menu "Pengaturan Toko".
+3. Pada Kartu 1 "Identitas Usaha & Branding Toko":
+   - Nama Cafe / Toko : Ketik nama baru (misal: Hadi Cafee, Kopi Senja, dll).
+   - Tagline          : Ketik slogan (misal: CAFE & RESTO SYSTEM).
+   - Ganti Logo Toko  : Klik tombol "Pilih File" dan pilih gambar logo dari laptop.
+     (Mendukung format JPG, PNG, WEBP, SVG maksimal 2 MB).
+4. Klik tombol "Simpan Pengaturan Toko".
+5. Logo dan nama baru akan langsung berubah otomatis di navbar atas, layar kasir, 
+   halaman login, dan di struk thermal saat kasir mencetak tagihan.
+
+
+================================================================================
+6. CARA MENGATUR REKENING BANK, VA, DAN QRIS
+================================================================================
+Pada halaman pemesanan di HP tamu meja, tamu bisa memilih metode bayar transfer 
+atau QRIS. Anda bisa menentukan rekening apa saja yang tampil:
+
+1. Buka menu Admin -> "Pengaturan Toko".
+2. Gulir ke Kartu "Nomor Virtual Account (VA) & Rekening Bank untuk Tamu".
+3. Anda bisa:
+   - MENGUBAH NOMOR REKENING:
+     Ketik Nomor Rekening / VA dan Nama Pemilik (a.n.), lalu klik Simpan.
+   - MENONAKTIFKAN / MENGAKTIFKAN BANK:
+     Setiap bank memiliki tombol switch/toggle. Jika tombol dimatikan, 
+     bank tersebut TIDAK AKAN MUNCUL di pilihan pembayaran HP tamu.
+   - MENAMBAH BANK BARU:
+     Klik tombol "+ Tambah Bank Baru", pilih jenis bank (BCA, Mandiri, BRI, 
+     BNI, BSI, CIMB, Seabank, Jago, dll), isi nomor rekening dan nama pemilik.
+   - MENGHAPUS BANK:
+     Klik icon tempat sampah pada baris bank yang ingin dihapus.
+
+Tentang QRIS:
+- Di menu kasir, kasir bisa memilih metode pembayaran "QRIS Instan".
+- Tamu yang memesan dari meja juga dapat memilih opsi pembayaran QRIS. 
+- Anda bisa menaruh gambar/stiker QRIS fisik resto Anda di atas meja atau kasir.
+
+
+================================================================================
+7. CARA MENGATUR MEJA & CETAK QR CODE MEJA
+================================================================================
+1. Buka menu "Meja" di navbar atas.
+2. Anda akan melihat denah seluruh meja beserta statusnya (Kosong / Terisi Tamu).
+3. MENAMBAH MEJA BARU:
+   - Klik tombol "+ Tambah Meja Baru".
+   - Masukkan Nama Meja (misal: Meja 09, Rooftop 01, VIP Room).
+   - Masukkan Kapasitas Kursi (misal: 4 Kursi).
+   - Klik "Simpan Meja".
+4. MENGEDIT ATAU MENGHAPUS MEJA:
+   - Klik tombol edit (pensil) atau tombol hapus pada kartu meja.
+5. MENCETAK QR CODE MEJA (UNTUK DITEMPEL DI MEJA TAMU):
+   - Klik tombol "QR" pada meja tertentu, atau klik "Cetak Semua Stand QR Meja".
+   - Sistem akan membuka lembar cetak siap print (Tent Card Stand Meja) 
+     lengkap dengan QR Code, Nama Meja, dan panduan scan untuk tamu cafe.
+
+
+================================================================================
+8. CARA MENGATUR MENU & AUDIT STOK GUDANG
+================================================================================
+
+A. KELOLA MENU (ADMIN):
+1. Buka menu "Menu" di navbar atas.
+2. Klik "+ Tambah Menu Baru".
+3. Masukkan Nama Menu, Kategori (Makanan/Minuman/Snack), Harga Jual, 
+   Harga Modal (untuk menghitung laba bersih resto), foto menu, dan sisa stok awal.
+4. Klik "Simpan Menu".
+
+B. AUDIT & MANAJEMEN STOK GUDANG (AUDITOR & ADMIN):
+1. Buka menu "Audit Stok" (/inventory).
+2. Pada tabel produk, Anda bisa melihat stok setiap menu.
+3. Anda bisa melakukan 3 aksi cepat:
+   - TAMBAH STOK MASUK (+):
+     Dipakai saat belanja bahan baku baru dari supplier / restock.
+   - CATAT STOK KELUAR / RUSAK (-):
+     Dipakai jika ada makanan/minuman yang basi, tumpah, kadaluwarsa, atau rusak.
+   - STOCK OPNAME (PENYESUAIAN FISIK):
+     Dipakai saat staf gudang menghitung ulang barang fisik di etalase/dapur.
+4. Buka menu "Laporan Masuk / Keluar" (/inventory/logs) untuk melihat rekap 
+   seluruh mutasi barang masuk, keluar, dan terjual beserta tombol cetak laporan.
+
+
+================================================================================
+9. CARA PEMBATALAN / HAPUS PESANAN (VOID ORDER) OLEH KASIR
+================================================================================
+Jika kasir salah memasukkan menu, salah memilih meja, atau pelanggan tiba-tiba 
+membatalkan pesanan:
+
+1. Buka menu "Riwayat" di navbar kasir (/orders).
+2. Cari pesanan yang salah, lalu klik tombol merah "Hapus" pada kolom paling kanan.
+3. Jendela konfirmasi akan terbuka. Kasir WAJIB memilih alasan kesalahan, contoh:
+   - "Salah input menu oleh kasir"
+   - "Pelanggan membatalkan pesanan"
+   - "Pesanan ganda / double input"
+   - "Salah pilih nomor meja", dll.
+4. Klik "Ya, Hapus Pesanan".
+5. APA YANG TERJADI SETELAH DIHAPUS?
+   - Pesanan tersebut LANGSUNG HILANG dari layar riwayat kasir.
+   - Porsi menu yang dipesan OTOMATIS DIKEMBALIKAN ke stok gudang.
+   - Meja makan terkait otomatis KOSONG/TERSEDIA kembali.
+   - Omzet pendapatan hari ini otomatis tidak memasukkan transaksi yang salah tadi.
+6. PENGAWASAN HISTORI VOID (ANTI-KECURANGAN):
+   - Kasir TIDAK BISA melihat daftar pesanan yang sudah dihapus.
+   - ADMIN & AUDITOR memiliki akses penuh ke menu "Order Dihapus" 
+     (/inventory/deleted-orders) atau tab "Dihapus" di riwayat pesanan.
+   - Admin bisa memantau siapa kasir yang menghapus, kapan dihapus, berapa 
+     nominalnya, dan alasan pembatalannya.
+
+
+================================================================================
+10. CARA KELOLA PENGGUNA & GANTI PASSWORD
+================================================================================
+Khusus akun Admin / Manager Resto:
+
+1. Buka menu "Kelola User" di navbar atas (/admin/users).
+2. Anda bisa:
+   - MENAMBAH PENGGUNA BARU:
+     Klik "+ Tambah Pengguna", isi Nama, Email, Role (Admin, Kasir, atau Auditor), 
+     dan Password baru minimal 6 karakter.
+   - MENGUBAH ROLE & EMAIL:
+     Klik tombol "Edit" pada salah satu staf, Anda bisa mengganti nama, 
+     alamat email login, atau menaikkan/menurunkan peran hak aksesnya.
+   - MENGGANTI PASSWORD KASIR / STAF:
+     Klik tombol "Password" pada staf yang lupa kata sandi. Masukkan password baru.
+   - MENGGANTI PASSWORD AKUN ADMIN SENDIRI:
+     Klik tombol atas "Ganti Password Saya" di pojok kanan atas.
+   - MENGHAPUS AKUN:
+     Klik tombol tempat sampah pada staf yang sudah tidak bekerja lagi.
+     * Sistem memiliki proteksi keamanan: Anda tidak bisa menghapus akun Anda 
+       sendiri yang sedang login, dan tidak bisa menghapus akun Admin jika 
+       hanya ada 1 Admin di sistem.
+
+
+================================================================================
+                 BUTUH BANTUAN TEKNIS LEBIH LANJUT?
+================================================================================
+- Lokasi File Konfigurasi Jaringan : C:\xampp\htdocs\kasir-app\.env
+- File Database SQLite            : C:\xampp\htdocs\kasir-app\database\database.sqlite
+- Script Cepat Start Server       : C:\xampp\htdocs\kasir-app\serve.bat
+
+Semoga sistem Nusa POS ini dapat membantu kelancaran operasional cafe & resto Anda!
+================================================================================
